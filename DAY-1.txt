@@ -1,0 +1,161 @@
+
+Microsoft Windows [Version 10.0.26200.8457]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\AI-DGL05-033>ssh dgx-s-pu-socse-20241cai0091
+ssh: Could not resolve hostname dgx-s-pu-socse-20241cai0091: No such host is known.
+
+C:\Users\AI-DGL05-033>ssh dgx-s-pu-socse-20241cai0091@172.19.0.11
+dgx-s-pu-socse-20241cai0091@172.19.0.11's password:
+Welcome to Ubuntu 24.04.1 LTS (GNU/Linux 6.8.0-51-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+439 updates can be applied immediately.
+216 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+2 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Welcome to Base Command Manager 11.0
+
+                                            Based on Ubuntu Noble Numbat 24.04
+                                                    Cluster Manager ID: #00000
+
+Use the following commands to adjust your environment:
+
+'module avail'            - show available modules
+'module add <module>'     - adds a module to your environment for this session
+'module initadd <module>' - configure module to be loaded at every login
+                            (Note: initadd is available only for Tcl modules)
+
+-------------------------------------------------------------------------------
+Last login: Tue Apr  7 10:02:40 2026 from 172.19.3.138
+Loading gcc/14.2.0
+  Loading requirement: gmp/6.3.0 mpfr/4.2.1 mpc/1.3.1
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ vim pod.yaml
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl apply -f pod.yaml
+pod/my-pod created
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl get pods
+NAME     READY   STATUS    RESTARTS   AGE
+my-pod   1/1     Running   0          9m42s
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ vim pod-services.yaml
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl apply -f pod-services.yaml
+service/my-service-1 created
+Error from server (Forbidden): error when creating "pod-services.yaml": pods "my-pod-1" is forbidden: exceeded quota: user-quota, requested: limits.cpu=8,limits.memory=16Gi,requests.cpu=8,requests.memory=16Gi,requests.nvidia.com/mig-1g.18gb=1, used: limits.cpu=8,limits.memory=16Gi,requests.cpu=8,requests.memory=16Gi,requests.nvidia.com/mig-1g.18gb=1, limited: limits.cpu=8,limits.memory=16Gi,requests.cpu=8,requests.memory=16Gi,requests.nvidia.com/mig-1g.18gb=1
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl delete pod pod.yaml
+Error from server (NotFound): pods "pod.yaml" not found
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl delete pod pod.yaml
+Error from server (NotFound): pods "pod.yaml" not found
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl delete pod my-pod.yaml
+Error from server (NotFound): pods "my-pod.yaml" not found
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl delete pod my-pod-1
+Error from server (NotFound): pods "my-pod-1" not found
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl delete pod my-pod
+pod "my-pod" deleted
+
+
+^Cdgx-s-pu-socse-20241cai0091@presidency-headnode:~$ vim pod-services.yaml
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl apply -f pod-services.yaml
+pod/my-pod-1 created
+service/my-service-1 unchanged
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl get pods,services
+NAME           READY   STATUS    RESTARTS   AGE
+pod/my-pod-1   1/1     Running   0          69s
+
+NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/my-service-1   NodePort   10.150.242.26   <none>        8000:32469/TCP   7m11s
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl exec -it my-service-1 -- bash
+Error from server (NotFound): pods "my-service-1" not found
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ kubectl exec -it service/my-service-1 -- bash
+root@my-pod-1:/workspace# jupyter lab --NotebookApp.token='1234'
+
+[I 2026-06-01 05:31:38.327 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2026-06-01 05:31:38.329 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[W 2026-06-01 05:31:38.330 LabApp] 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2026-06-01 05:31:38.332 ServerApp] ServerApp.token config is deprecated in 2.0. Use IdentityProvider.token.
+[I 2026-06-01 05:31:38.332 ServerApp] jupyterlab | extension was successfully linked.
+[I 2026-06-01 05:31:38.332 ServerApp] jupyterlab_code_formatter | extension was successfully linked.
+[I 2026-06-01 05:31:38.332 ServerApp] jupyterlab_jupytext | extension was successfully linked.
+[I 2026-06-01 05:31:38.332 ServerApp] jupyterlab_tensorboard_pro | extension was successfully linked.
+[I 2026-06-01 05:31:38.334 ServerApp] notebook | extension was successfully linked.
+[I 2026-06-01 05:31:38.335 ServerApp] Writing Jupyter server cookie secret to /root/.local/share/jupyter/runtime/jupyter_cookie_secret
+[I 2026-06-01 05:31:38.459 ServerApp] notebook_shim | extension was successfully linked.
+[I 2026-06-01 05:31:38.472 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2026-06-01 05:31:38.474 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2026-06-01 05:31:38.474 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2026-06-01 05:31:38.475 LabApp] JupyterLab extension loaded from /usr/local/lib/python3.10/dist-packages/jupyterlab
+[I 2026-06-01 05:31:38.475 LabApp] JupyterLab application directory is /usr/local/share/jupyter/lab
+[I 2026-06-01 05:31:38.475 LabApp] Extension Manager is 'pypi'.
+[I 2026-06-01 05:31:38.516 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2026-06-01 05:31:38.516 ServerApp] Registered jupyterlab_code_formatter server extension
+[I 2026-06-01 05:31:38.516 ServerApp] jupyterlab_code_formatter | extension was successfully loaded.
+[I 2026-06-01 05:31:38.516 ServerApp] [Jupytext Server Extension] NotebookApp.contents_manager_class is (a subclass of) jupytext.TextFileContentsManager already - OK
+[I 2026-06-01 05:31:38.516 ServerApp] jupyterlab_jupytext | extension was successfully loaded.
+[I 2026-06-01 05:31:38.931 ServerApp] jupyterlab_tensorboard_pro extension loaded.
+[I 2026-06-01 05:31:38.931 ServerApp] jupyterlab_tensorboard_pro | extension was successfully loaded.
+[I 2026-06-01 05:31:38.933 ServerApp] notebook | extension was successfully loaded.
+[I 2026-06-01 05:31:38.933 ServerApp] Serving notebooks from local directory: /workspace
+[I 2026-06-01 05:31:38.933 ServerApp] Jupyter Server 2.14.2 is running at:
+[I 2026-06-01 05:31:38.933 ServerApp] http://hostname:8888/lab?token=...
+[I 2026-06-01 05:31:38.933 ServerApp]     http://127.0.0.1:8888/lab?token=...
+[I 2026-06-01 05:31:38.933 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 2026-06-01 05:31:38.947 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
+[I 2026-06-01 05:32:54.677 LabApp] 302 GET /lab (@192.168.100.1) 0.62ms
+[I 2026-06-01 05:33:03.746 ServerApp] User 8a671370eb61415d9fe09f47117f54d2 logged in.
+[I 2026-06-01 05:33:03.746 ServerApp] 302 POST /login?next=%2Flab (8a671370eb61415d9fe09f47117f54d2@192.168.100.1) 1.14ms
+[W 2026-06-01 05:33:04.769 LabApp] Could not determine jupyterlab build status without nodejs
+[I 2026-06-01 05:52:52.586 ServerApp] Creating new notebook in
+[I 2026-06-01 05:52:52.609 ServerApp] Saving Untitled.ipynb
+[I 2026-06-01 05:52:52.609 ServerApp] Writing notebook-signing key to /root/.local/share/jupyter/notebook_secret
+[I 2026-06-01 05:52:52.858 ServerApp] Kernel started: 99d7ba50-6d5e-4e6f-9f81-98ea21059d8d
+[I 2026-06-01 05:52:53.219 ServerApp] Connecting to kernel 99d7ba50-6d5e-4e6f-9f81-98ea21059d8d.
+[I 2026-06-01 05:52:53.246 ServerApp] Connecting to kernel 99d7ba50-6d5e-4e6f-9f81-98ea21059d8d.
+[I 2026-06-01 05:52:53.263 ServerApp] Connecting to kernel 99d7ba50-6d5e-4e6f-9f81-98ea21059d8d.
+[I 2026-06-01 05:54:52.739 ServerApp] Saving file at /Untitled.ipynb
+[I 2026-06-01 05:54:52.740 ServerApp] Saving Untitled.ipynb
+[I 2026-06-01 05:56:53.022 ServerApp] Saving file at /Untitled.ipynb
+[I 2026-06-01 05:56:53.022 ServerApp] Saving Untitled.ipynb
+[I 2026-06-01 05:58:54.004 ServerApp] Saving file at /Untitled.ipynb
+[I 2026-06-01 05:58:54.004 ServerApp] Saving Untitled.ipynb
+[I 2026-06-01 05:59:39.378 ServerApp] Creating new directory in
+[I 2026-06-01 05:59:54.379 ServerApp] Creating new file in
+[I 2026-06-01 06:00:05.928 ServerApp] Uploading file to /test1.jpg
+[W 2026-06-01 06:00:11.457 ServerApp] delete /untitled.txt
+[W 2026-06-01 06:00:15.850 ServerApp] delete /Untitled Folder
+[I 2026-06-01 06:00:54.053 ServerApp] Saving file at /Untitled.ipynb
+[I 2026-06-01 06:00:54.053 ServerApp] Saving Untitled.ipynb
+[W 2026-06-01 06:04:43.048 ServerApp] delete /test1.jpg
+[I 2026-06-01 06:04:53.698 ServerApp] Uploading file to /test1.jpg
+[I 2026-06-01 06:06:54.124 ServerApp] Saving file at /Untitled.ipynb
+[I 2026-06-01 06:06:54.124 ServerApp] Saving Untitled.ipynb
+^C[I 2026-06-01 06:21:42.190 ServerApp] interrupted
+[I 2026-06-01 06:21:42.191 ServerApp] Serving notebooks from local directory: /workspace
+    1 active kernel
+    Jupyter Server 2.14.2 is running at:
+    http://hostname:8888/lab?token=...
+        http://127.0.0.1:8888/lab?token=...
+Shut down this Jupyter server (y/[n])? y
+[C 2026-06-01 06:21:46.012 ServerApp] Shutdown confirmed
+[I 2026-06-01 06:21:46.013 ServerApp] Shutting down 8 extensions
+[I 2026-06-01 06:21:46.014 ServerApp] Shutting down 1 kernel
+[I 2026-06-01 06:21:46.014 ServerApp] Kernel shutdown: 99d7ba50-6d5e-4e6f-9f81-98ea21059d8d
+root@my-pod-1:/workspace#
+exit
+dgx-s-pu-socse-20241cai0091@presidency-headnode:~$ logout
+Connection to 172.19.0.11 closed.
+
+C:\Users\AI-DGL05-033>kubectl get pod,services
+'kubectl' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\AI-DGL05-033>
